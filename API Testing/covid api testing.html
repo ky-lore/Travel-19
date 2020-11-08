@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="container-sm">
+    <form>
+      <p>
+        <label for="pokeName">Enter Location</label>
+        <input type="text" name="search" id="search">
+      </p>
+      <p>
+        <button id="userInput">Get COVID info</button>
+      </p>
+    </form>
+    <div id="results"></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+
+    document.getElementById("userInput").addEventListener('click', event => {
+      event.preventDefault();
+      var inputCountry = document.getElementById('search').value
+      console.log(inputCountry)
+      axios.get(`https://corona.lmao.ninja/v2/countries/${inputCountry}?yesterday&strict&query%20`)
+        .then(res => {
+          console.log(res)
+          var covid = res.data
+          var returnedCountry = covid.country
+          var activeCases = covid.active;
+          document.getElementById("results").innerHTML = `
+            There are currently ${activeCases} cases in ${returnedCountry}.
+          `
+
+
+        })
+        .catch(err => console.error(err))
+    })
+
+  </script>
+</body>
+
+</html>
