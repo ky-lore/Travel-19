@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <form>
+    <p>
+      <label for="country">Country</label>
+      <input type="text" name="country" id="country">
+    </p>
+    <p>
+      <button id="search">Cases By Country</button>
+    </p>
+  </form>
+  <div id="covid"></div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+
+    document.getElementById('search').addEventListener('click', event => {
+      event.preventDefault()
+
+      let country = document.getElementById('country').value
+      console.log(country)
+
+      axios.get(`https://corona.lmao.ninja/v2/countries/${country}?yesterday&strict&query%20%60
+`)
+        .then(res => {
+
+          let covid = res.data
+          console.log(covid)
+
+          document.getElementById('covid').innerHTML = `
+          <p>Active Cases: ${covid.active}</p>
+          <p>Today's Cases: ${covid.todayCases}</p>
+          <p>Today's Deaths: ${covid.todayDeaths}</p>
+        `
+
+          document.getElementById('country').value = ''
+        })
+        .catch(err => console.error(err))
+    })
+
+
+
+  </script>
+</body>
+
+</html>
