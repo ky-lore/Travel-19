@@ -10,7 +10,7 @@
 <body>
   <form>
     <p>
-      <label for="country">Country</label>
+      <label for="country">Search</label>
       <input type="text" name="country" id="country">
     </p>
     <p>
@@ -36,6 +36,7 @@
           console.log(covid)
 
           document.getElementById('covid').innerHTML = `
+          <p>Country: ${covid.country}</p>
           <p>Active Cases: ${covid.active}</p>
           <p>Today's Cases: ${covid.todayCases}</p>
           <p>Today's Deaths: ${covid.todayDeaths}</p>
