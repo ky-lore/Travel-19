@@ -1,3 +1,7 @@
+body {
+  background-image: url('/images/vernazza-italy.jpg')
+}
+
 .hero {
   margin-bottom: 2em;
 }
