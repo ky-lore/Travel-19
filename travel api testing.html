@@ -28,9 +28,37 @@
       event.preventDefault();
       var lon;
       var lat;
-      axios.get(`https://api.opentripmap.com/0.1/en/places/radius?radius=10000&lon=139.7038&lat=35.6620&rate=3&apikey=5ae2e3f221c38a28845f05b6242c78f95403bb14bb2af76c5b0bcf42`)
+      var searchInput = document.getElementById('search').value;
+      console.log(searchInput)
+      
+      axios.get(`https://api.opentripmap.com/0.1/en/places/geoname?name=${searchInput}&apikey=5ae2e3f221c38a28845f05b6242c78f95403bb14bb2af76c5b0bcf42`)
         .then(res => {
-          console.log(res)
+          console.log(res.data.country)
+          lon = res.data.lon;
+          lat = res.data.lat;
+          console.log(lon, lat)
+          return lon;
+          return lat;
+        })
+        .catch(err => console.error(err))
+      
+      axios.get(`https://api.opentripmap.com/0.1/en/places/radius?radius=10000&lon=${lon}&lat=${lat}&rate=3&apikey=5ae2e3f221c38a28845f05b6242c78f95403bb14bb2af76c5b0bcf42`)
+        .then(res => {
+          var loc = res.data;
+          console.log(loc)
+          console.log(lon)
+          console.log(lat)
+
+          document.getElementById('results').innerHTML = `
+            Your top 5 recommended spots are:
+            <p>${loc.features[0].properties.name}
+            <p>${loc.features[10].properties.name}
+            <p>${loc.features[20].properties.name}
+            <p>${loc.features[30].properties.name}
+            <p>${loc.features[40].properties.name}
+          `
+          
+
         })
         .catch(err => console.error(err))
     })
