@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="container-sm">
+    <form>
+      <p>
+        <label for="pokeName">Enter Location</label>
+        <input type="text" name="search" id="search">
+      </p>
+      <p>
+        <button id="userInput">Get COVID info</button>
+      </p>
+    </form>
+    <div id="results"></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+
+    document.getElementById("userInput").addEventListener('click', event => {
+      event.preventDefault();
+      var lon;
+      var lat;
+      axios.get(`https://api.opentripmap.com/0.1/en/places/radius?radius=10000&lon=139.7038&lat=35.6620&rate=3&apikey=5ae2e3f221c38a28845f05b6242c78f95403bb14bb2af76c5b0bcf42`)
+        .then(res => {
+          console.log(res)
+        })
+        .catch(err => console.error(err))
+    })
+
+  </script>
+</body>
+
+</html>
