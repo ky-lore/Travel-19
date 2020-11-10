@@ -30,7 +30,7 @@
             <form>
               <p class="title is-size-3">Where to?</p>
               <input class="input is-rounded" type="text" placeholder="Your destination" id="search">
-              <button class="button is-danger is-rounded" id="userInput">Search</button>
+              <center><button class="button is-danger is-rounded" id="userInput">Search</button></center>
             </form>
           </article>
           <article class="tile is-child notification is-danger">
@@ -145,27 +145,36 @@
               var weather = res.data.list
               // 9/5(K - 273) + 32
               document.getElementById('weatherResults').innerHTML = `
-                <div class="card">
-                  <p><b>Tomorrow</b><br>
-                  Weather: ${weather[4].weather[0].main}<br>
-                  Temperature: ${Math.round(9/5 * (weather[4].main.temp - 273) + 32)}° F<br>
-                  Wind: ${weather[4].wind.speed} mph
-                </div> <hr>
-
-                <div class="card">
-                  <p><b>The next day</b><br>
-                  Weather: ${weather[12].weather[0].main}<br>
-                  Temperature: ${Math.round(9 / 5 * (weather[12].main.temp - 273) + 32)}° F<br>
-                  Wind: ${weather[12].wind.speed} mph
-                </div> <hr>
-
-                <div class="card">
-                  <p><b>Two days out</b><br>
-                  Weather: ${weather[20].weather[0].main}<br>
-                  Temperature: ${Math.round(9 / 5 * (weather[20].main.temp - 273) + 32)}° F<br>
-                  Wind: ${weather[20].wind.speed} mph
-                </div>
-                
+                <section class="section py-1">
+                  <div class="container">
+                    <div class="columns">
+                      <div class="column">
+                        <div class="notification">
+                          <p><b>Tomorrow</b><br>
+                            Weather: ${weather[4].weather[0].main}<br>
+                            Temperature: ${Math.round(9 / 5 * (weather[4].main.temp - 273) + 32)}° F<br>
+                            Wind: ${weather[4].wind.speed} mph
+                        </div>
+                      </div>
+                      <div class="column">
+                        <div class="notification">
+                          <p><b>The next day</b><br>
+                            Weather: ${weather[12].weather[0].main}<br>
+                            Temperature: ${Math.round(9 / 5 * (weather[12].main.temp - 273) + 32)}° F<br>
+                            Wind: ${weather[12].wind.speed} mph
+                        </div>
+                      </div>
+                      <div class="column">
+                        <div class="notification">
+                          <p><b>Two days out</b><br>
+                            Weather: ${weather[20].weather[0].main}<br>
+                            Temperature: ${Math.round(9 / 5 * (weather[20].main.temp - 273) + 32)}° F<br>
+                            Wind: ${weather[20].wind.speed} mph
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
               `
             })
             .catch(err => console.error(err))
