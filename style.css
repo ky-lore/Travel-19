@@ -9,3 +9,7 @@ body {
 .hero {
   margin-bottom: 2em;
 }
+
+a {
+  color: white;
+}
