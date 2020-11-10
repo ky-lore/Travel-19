@@ -1,5 +1,5 @@
 body {
-  background-image: url('/images/vernazza-italy.jpg')
+  background-image: url('./images/vernazza-italy.jpg')
 }
 
 .hero {
