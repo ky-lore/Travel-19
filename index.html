@@ -28,26 +28,27 @@
         <div class="tile is-parent is-vertical">
           <article class="tile is-child notification is-primary">
             <form>
-            <p class="title is-size-3">Where to?</p>
-            <input class="input is-rounded" type="text" placeholder="Your destination" id="search">
-            <button class="button is-danger is-rounded" id="userInput">Search</button>
+              <p class="title is-size-3">Where to?</p>
+              <input class="input is-rounded" type="text" placeholder="Your destination" id="search">
+              <button class="button is-danger is-rounded" id="userInput">Search</button>
             </form>
           </article>
           <article class="tile is-child notification is-danger">
             <p class="title has-text-white">Covid-19</p>
             <p class="subtitle has-text-white">Your Coronavirus stats:</p>
             <div class="content has-text-white" id="covidResults">
-                <!-- Content -->
-                
-              </div>
+              <!-- Content -->
+
+            </div>
           </article>
         </div>
         <div class="tile is-parent">
           <article class="tile is-child notification is-info">
-            <p class="title">Flight Information</p>
-            <p class="subtitle">With an image</p>
+            <p class="title">A snapshot of your destination</p>
             <figure class="image is-4by3">
-              <img src="./images/vernazza-italy.jpg">
+              <div id="imageResult">
+                <!-- image appears here hopefully -->
+              </div>
             </figure>
           </article>
         </div>
@@ -65,11 +66,11 @@
     <div class="tile is-parent">
       <article class="tile is-child notification is-success">
         <div class="content">
-          <p class="title">Check these out!</p>
-          <p class="subtitle">Your top 5 recommended spots are:</p>
-          <div class="content" id="results">
+          <p class="title has-text-white">Check these out!</p>
+          <p class="subtitle has-text-white">Your top 10 recommended spots (click to visit!):</p>
+          <div class="content has-text-white" id="results">
             <!-- Content -->
-            
+
           </div>
         </div>
       </article>
@@ -85,7 +86,7 @@
       var lat;
       var searchInput = document.getElementById('search').value;
       console.log(searchInput)
-      
+
       axios.get(`https://api.opentripmap.com/0.1/en/places/geoname?name=${searchInput}&apikey=5ae2e3f221c38a28845f05b6242c78f95403bb14bb2af76c5b0bcf42`)
         .then(res => {
           console.log(res.data.country)
@@ -100,35 +101,59 @@
               console.log(loc)
               console.log(lon)
               console.log(lat)
-              
-          axios.get(`https://corona.lmao.ninja/v2/countries/${country}?yesterday&strict&query%20%60`)
-            .then(res => {
-                var covid = res.data
-                console.log(covid)
 
-                document.getElementById('results').innerHTML = `
-                <p>${loc.features[0].properties.name}
-                <p>${loc.features[10].properties.name}
-                <p>${loc.features[20].properties.name}
-                <p>${loc.features[30].properties.name}
-                <p>${loc.features[40].properties.name}
-                `
-                document.getElementById('covidResults').innerHTML = `
-                <p>Country: ${covid.country}
-                <p>Active Cases: ${covid.active}
-                <p>Today's Cases: ${covid.todayCases}
-                <p>Today's Deaths: ${covid.todayDeaths}
-                `
-            })
-            .catch(err => console.error(err))
+              axios.get(`https://corona.lmao.ninja/v2/countries/${country}?yesterday&strict&query%20%60`)
+                .then(res => {
+                  var covid = res.data;
+                  console.log(covid)
+
+                  axios.get(`https://api.unsplash.com/search/photos?page=1&query=${searchInput}&client_id=mMMsMJbMcVWyjFIi4RLnMYtZ0_PAQXqh-HODKnPCcxw`)
+                    .then(res => {
+                      var image = res.data;
+                      console.log(image)
+                    
+
+                    document.getElementById('results').innerHTML = `
+                      <h3 class="has-text-white">
+                      <a style="text-decoration:none" href="https://www.google.com/search?q=${loc.features[0].properties.name}" target="_blank">${loc.features[0].properties.name}<br><br>                 
+                      <a style="text-decoration:none" href="https://www.google.com/search?q=${loc.features[5].properties.name}" target="_blank">${loc.features[5].properties.name} <br><br>
+                      <a style="text-decoration:none" href="https://www.google.com/search?q=${loc.features[10].properties.name}" target="_blank">${loc.features[10].properties.name} <br><br>
+                      <a style="text-decoration:none" href="https://www.google.com/search?q=${loc.features[15].properties.name}" target="_blank">${loc.features[15].properties.name} <br><br>
+                      <a style="text-decoration:none" href="https://www.google.com/search?q=${loc.features[20].properties.name}" target="_blank">${loc.features[20].properties.name} <br><br>
+                      <a style="text-decoration:none" href="https://www.google.com/search?q=${loc.features[25].properties.name}" target="_blank">${loc.features[25].properties.name} <br><br>
+                      <a style="text-decoration:none" href="https://www.google.com/search?q=${loc.features[30].properties.name}" target="_blank">${loc.features[30].properties.name} <br><br>
+                      <a style="text-decoration:none" href="https://www.google.com/search?q=${loc.features[35].properties.name}" target="_blank">${loc.features[35].properties.name} <br><br>
+                      <a style="text-decoration:none" href="https://www.google.com/search?q=${loc.features[40].properties.name}" target="_blank">${loc.features[40].properties.name} <br><br>
+                      <a style="text-decoration:none" href="https://www.google.com/search?q=${loc.features[45].properties.name}" target="_blank">${loc.features[45].properties.name} <br><br>
+                      </h3>
+                    `
+
+                    document.getElementById('covidResults').innerHTML = `
+                      <h1 class="has-text-white">${covid.country}</h1>
+                      <p><b>Active Cases</b> ${covid.active}
+                      <p><b>Today's Cases</b> ${covid.todayCases}
+                      <p><b>Today's Deaths</b> ${covid.todayDeaths}
+                    `
+
+                    document.getElementById('imageResult').innerHTML = ''
+                      var imgElem = document.createElement('img')
+                      imgElem.src = image.results[0].urls.regular
+                      imgElem.alt = image.results[0].alt_description
+                      document.getElementById('imageResult').append(imgElem)
+
+                    document.getElementById('search').value = ''
+                    })
+                    .catch(err => console.error(err))
+                })
+                .catch(err => console.error(err))
 
             })
             .catch(err => console.error(err))
 
         })
         .catch(err => console.error(err))
-      
-      
+
+
     })
 
   </script>
