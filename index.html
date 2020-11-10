@@ -122,9 +122,9 @@
                   `
                   document.getElementById('covidResults').innerHTML = `
                     <h1 class="has-text-white">${covid.country}</h1>
-                    <p>Active Cases: ${covid.active}
-                    <p>Today's Cases: ${covid.todayCases}
-                    <p>Today's Deaths: ${covid.todayDeaths}
+                    <p><b>Active Cases</b> ${covid.active}
+                    <p><b>Today's Cases</b> ${covid.todayCases}
+                    <p><b>Today's Deaths</b> ${covid.todayDeaths}
                   `
                 })
                 .catch(err => console.error(err))
