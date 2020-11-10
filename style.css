@@ -1,7 +1,15 @@
 body {
-  background-image: url('./images/vernazza-italy.jpg')
+  background: url('./images/vernazza-italy.jpg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 
 .hero {
   margin-bottom: 2em;
+}
+
+a {
+  color: white;
 }
