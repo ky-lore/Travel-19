@@ -44,10 +44,11 @@
         </div>
         <div class="tile is-parent">
           <article class="tile is-child notification is-info">
-            <p class="title">Flight Information</p>
-            <p class="subtitle">With an image</p>
+            <p class="title">A snapshot of your destination</p>
             <figure class="image is-4by3">
-              <img src="./images/vernazza-italy.jpg">
+              <div id="imageResult">
+                <!-- image appears here -->
+              </div>
             </figure>
           </article>
         </div>
@@ -113,26 +114,40 @@
                   var covid = res.data
                   console.log(covid)
 
-                  document.getElementById('results').innerHTML = `
-                    <h3 class="has-text-white">
-                    <a style="text-decoration:none" href="https://www.google.com/search?q=${loc.features[0].properties.name}" target="_blank">${loc.features[0].properties.name}<br><br>                 
-                    <a style="text-decoration:none" href="https://www.google.com/search?q=${loc.features[5].properties.name}" target="_blank">${loc.features[5].properties.name} <br><br>
-                    <a style="text-decoration:none" href="https://www.google.com/search?q=${loc.features[10].properties.name}" target="_blank">${loc.features[10].properties.name} <br><br>
-                    <a style="text-decoration:none" href="https://www.google.com/search?q=${loc.features[15].properties.name}" target="_blank">${loc.features[15].properties.name} <br><br>
-                    <a style="text-decoration:none" href="https://www.google.com/search?q=${loc.features[20].properties.name}" target="_blank">${loc.features[20].properties.name} <br><br>
-                    <a style="text-decoration:none" href="https://www.google.com/search?q=${loc.features[25].properties.name}" target="_blank">${loc.features[25].properties.name} <br><br>
-                    <a style="text-decoration:none" href="https://www.google.com/search?q=${loc.features[30].properties.name}" target="_blank">${loc.features[30].properties.name} <br><br>
-                    <a style="text-decoration:none" href="https://www.google.com/search?q=${loc.features[35].properties.name}" target="_blank">${loc.features[35].properties.name} <br><br>
-                    <a style="text-decoration:none" href="https://www.google.com/search?q=${loc.features[40].properties.name}" target="_blank">${loc.features[40].properties.name} <br><br>
-                    <a style="text-decoration:none" href="https://www.google.com/search?q=${loc.features[45].properties.name}" target="_blank">${loc.features[45].properties.name} <br><br>
-                    </h3>
-                  `
-                  document.getElementById('covidResults').innerHTML = `
-                    <h1 class="has-text-white">${covid.country}</h1>
-                    <p><b>Active Cases</b> ${covid.active}
-                    <p><b>Today's Cases</b> ${covid.todayCases}
-                    <p><b>Today's Deaths</b> ${covid.todayDeaths}
-                  `
+                  axios.get(`https://api.unsplash.com/search/photos?page=1&query=${searchInput}&client_id=mMMsMJbMcVWyjFIi4RLnMYtZ0_PAQXqh-HODKnPCcxw`)
+                    .then(res => {
+                      var image = res.data;
+                      console.log(image)
+
+                    document.getElementById('results').innerHTML = `
+                      <h3 class="has-text-white">
+                      <a style="text-decoration:none" href="https://www.google.com/search?q=${loc.features[0].properties.name}" target="_blank">${loc.features[0].properties.name}<br><br>                 
+                      <a style="text-decoration:none" href="https://www.google.com/search?q=${loc.features[5].properties.name}" target="_blank">${loc.features[5].properties.name} <br><br>
+                      <a style="text-decoration:none" href="https://www.google.com/search?q=${loc.features[10].properties.name}" target="_blank">${loc.features[10].properties.name} <br><br>
+                      <a style="text-decoration:none" href="https://www.google.com/search?q=${loc.features[15].properties.name}" target="_blank">${loc.features[15].properties.name} <br><br>
+                      <a style="text-decoration:none" href="https://www.google.com/search?q=${loc.features[20].properties.name}" target="_blank">${loc.features[20].properties.name} <br><br>
+                      <a style="text-decoration:none" href="https://www.google.com/search?q=${loc.features[25].properties.name}" target="_blank">${loc.features[25].properties.name} <br><br>
+                      <a style="text-decoration:none" href="https://www.google.com/search?q=${loc.features[30].properties.name}" target="_blank">${loc.features[30].properties.name} <br><br>
+                      <a style="text-decoration:none" href="https://www.google.com/search?q=${loc.features[35].properties.name}" target="_blank">${loc.features[35].properties.name} <br><br>
+                      <a style="text-decoration:none" href="https://www.google.com/search?q=${loc.features[40].properties.name}" target="_blank">${loc.features[40].properties.name} <br><br>
+                      <a style="text-decoration:none" href="https://www.google.com/search?q=${loc.features[45].properties.name}" target="_blank">${loc.features[45].properties.name} <br><br>
+                      </h3>
+                    `
+                    document.getElementById('covidResults').innerHTML = `
+                      <h1 class="has-text-white">${covid.country}</h1>
+                      <p><b>Active Cases</b> ${covid.active}
+                      <p><b>Today's Cases</b> ${covid.todayCases}
+                      <p><b>Today's Deaths</b> ${covid.todayDeaths}
+                    `
+                    document.getElementById('imageResult').innerHTML = ''
+                      var imgElem = document.createElement('img')
+                      imgElem.src = image.results[0].urls.regular
+                      imgElem.alt = image.results[0].alt_description
+                      document.getElementById('imageResult').append(imgElem)
+
+                    document.getElementById('search').value = ''
+                    })
+                    .catch(err => console.error(err))
                 })
                 .catch(err => console.error(err))
 
