@@ -10,15 +10,10 @@
 </head>
 
 <body>
-  <section class="hero is-warning has-text-centered mx-6 ml-6">
+  <section class="hero  has-text-centered mx-6 ml-6">
     <div class="hero-body">
       <div class="container">
-        <h1 class="title">
-          Travel-19
-        </h1>
-        <h2 class="subtitle">
-          Your one stop shop for planning the ultimate vacation getaway during a global pandemic!
-        </h2>
+        <img src="./images/travel191.png" alt="Travel-19">
       </div>
     </div>
   </section>
@@ -42,10 +37,11 @@
         </div>
         <div class="tile is-parent">
           <article class="tile is-child notification is-info">
-            <p class="title">Flight Information</p>
-            <p class="subtitle">With an image</p>
+            <p class="title">A snapshot of your destination</p>
             <figure class="image is-4by3">
-              <img src="./images/vernazza-italy.jpg">
+              <div id="imageResult">
+                <!-- Image Content -->
+              </div>
             </figure>
           </article>
         </div>
@@ -75,116 +71,14 @@
   </div>
   <footer class="footer has-background-link mx-6 ml-6">
     <div class="content has-text-centered">
-      <h2 class="title">
-        <a class="button is-success is-warning is-rounded" href="./contact.html">About Us</a>
-      </h2>
+      <p>
+        <a class="button is-success is-warning is-rounded" href="./about.html" target="_blank">About Us</a>
+      </p>
     </div>
   </footer>
   <!-- Javascript starts here -->
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <script>
-
-    document.getElementById("userInput").addEventListener('click', event => {
-      event.preventDefault();
-      var lon;
-      var lat;
-      var searchInput = document.getElementById('search').value;
-      console.log(searchInput)
-
-      axios.get(`https://api.opentripmap.com/0.1/en/places/geoname?name=${searchInput}&apikey=5ae2e3f221c38a28845f05b6242c78f95403bb14bb2af76c5b0bcf42`)
-        .then(res => {
-          console.log(res.data.country)
-          country = res.data.country;
-          lon = res.data.lon;
-          lat = res.data.lat;
-          console.log(lon, lat)
-
-          axios.get(`https://api.opentripmap.com/0.1/en/places/radius?radius=10000&lon=${lon}&lat=${lat}&rate=3&apikey=5ae2e3f221c38a28845f05b6242c78f95403bb14bb2af76c5b0bcf42`)
-            .then(res => {
-              var loc = res.data;
-              console.log(loc)
-              console.log(lon)
-              console.log(lat)
-
-              axios.get(`https://corona.lmao.ninja/v2/countries/${country}?yesterday&strict&query%20%60`)
-                .then(res => {
-                  var covid = res.data
-                  console.log(covid)
-
-                  document.getElementById('results').innerHTML = `
-                    <h3 class="has-text-white">
-                    <a style="text-decoration:none" href="https://www.google.com/search?q=${loc.features[0].properties.name}" target="_blank">${loc.features[0].properties.name}<br><br>                 
-                    <a style="text-decoration:none" href="https://www.google.com/search?q=${loc.features[5].properties.name}" target="_blank">${loc.features[5].properties.name} <br><br>
-                    <a style="text-decoration:none" href="https://www.google.com/search?q=${loc.features[10].properties.name}" target="_blank">${loc.features[10].properties.name} <br><br>
-                    <a style="text-decoration:none" href="https://www.google.com/search?q=${loc.features[15].properties.name}" target="_blank">${loc.features[15].properties.name} <br><br>
-                    <a style="text-decoration:none" href="https://www.google.com/search?q=${loc.features[20].properties.name}" target="_blank">${loc.features[20].properties.name} <br><br>
-                    <a style="text-decoration:none" href="https://www.google.com/search?q=${loc.features[25].properties.name}" target="_blank">${loc.features[25].properties.name} <br><br>
-                    <a style="text-decoration:none" href="https://www.google.com/search?q=${loc.features[30].properties.name}" target="_blank">${loc.features[30].properties.name} <br><br>
-                    <a style="text-decoration:none" href="https://www.google.com/search?q=${loc.features[35].properties.name}" target="_blank">${loc.features[35].properties.name} <br><br>
-                    <a style="text-decoration:none" href="https://www.google.com/search?q=${loc.features[40].properties.name}" target="_blank">${loc.features[40].properties.name} <br><br>
-                    <a style="text-decoration:none" href="https://www.google.com/search?q=${loc.features[45].properties.name}" target="_blank">${loc.features[45].properties.name} <br><br>
-                    </h3>
-                  `
-                  document.getElementById('covidResults').innerHTML = `
-                    <h1 class="has-text-white">${covid.country}</h1>
-                    <p><b>Active Cases</b> ${covid.active}
-                    <p><b>Today's Cases</b> ${covid.todayCases}
-                    <p><b>Today's Deaths</b> ${covid.todayDeaths}
-                  `
-                })
-                .catch(err => console.error(err))
-
-            })
-            .catch(err => console.error(err))
-
-          axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${searchInput}&appid=b9a19d23d6cf2eb624e5529ab42acecb`)
-            .then(res => {
-              console.log(res.data.list)
-              var weather = res.data.list
-              // 9/5(K - 273) + 32
-              document.getElementById('weatherResults').innerHTML = `
-                <section class="section py-1">
-                  <div class="container">
-                    <div class="columns">
-                      <div class="column">
-                        <div class="notification">
-                          <p><b>Tomorrow</b><br>
-                            Weather: ${weather[4].weather[0].main}<br>
-                            Temperature: ${Math.round(9 / 5 * (weather[4].main.temp - 273) + 32)}° F<br>
-                            Wind: ${weather[4].wind.speed} mph
-                        </div>
-                      </div>
-                      <div class="column">
-                        <div class="notification">
-                          <p><b>The next day</b><br>
-                            Weather: ${weather[12].weather[0].main}<br>
-                            Temperature: ${Math.round(9 / 5 * (weather[12].main.temp - 273) + 32)}° F<br>
-                            Wind: ${weather[12].wind.speed} mph
-                        </div>
-                      </div>
-                      <div class="column">
-                        <div class="notification">
-                          <p><b>Two days out</b><br>
-                            Weather: ${weather[20].weather[0].main}<br>
-                            Temperature: ${Math.round(9 / 5 * (weather[20].main.temp - 273) + 32)}° F<br>
-                            Wind: ${weather[20].wind.speed} mph
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </section>
-              `
-            })
-            .catch(err => console.error(err))
-
-
-        })
-        .catch(err => console.error(err))
-
-
-    })
-
-  </script>
+  <script src="./app.js"></script>
 </body>
 
 </html>
