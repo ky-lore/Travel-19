@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Travel-19</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+  <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+  <section class="hero is-warning has-text-centered mx-6 ml-6">
+    <div class="hero-body">
+      <div class="container">
+        <h1 class="title">
+          Travel-19
+        </h1>
+        <h2 class="subtitle">
+          Your one stop shop for planning the ultimate vacation getaway during a global pandemic!
+        </h2>
+      </div>
+    </div>
+  </section>
+  <div class="tile is-ancestor mx-6 ml-6">
+    <div class="tile is-vertical is-8">
+      <div class="tile">
+        <div class="tile is-parent is-vertical">
+          <article class="tile is-child notification is-primary">
+            <form>
+              <p class="title is-size-3">Where to?</p>
+              <input class="input is-rounded" type="text" placeholder="Your destination" id="search">
+              <button class="button is-danger is-rounded" id="userInput">Search</button>
+            </form>
+          </article>
+          <article class="tile is-child notification is-danger">
+            <p class="title has-text-white">Covid-19</p>
+            <p class="subtitle has-text-white">Your Coronavirus stats:</p>
+            <div class="content has-text-white" id="covidResults">
+              <!-- Content -->
+
+            </div>
+          </article>
+        </div>
+        <div class="tile is-parent">
+          <article class="tile is-child notification is-info">
+            <p class="title">Flight Information</p>
+            <p class="subtitle">With an image</p>
+            <figure class="image is-4by3">
+              <img src="./images/vernazza-italy.jpg">
+            </figure>
+          </article>
+        </div>
+      </div>
+      <div class="tile is-parent">
+        <article class="tile is-child notification is-warning">
+          <p class="title">Weather</p>
+          <p class="subtitle">Aligned with the right tile</p>
+          <div class="content">
+            <!-- Content -->
+          </div>
+        </article>
+      </div>
+    </div>
+    <div class="tile is-parent">
+      <article class="tile is-child notification is-success">
+        <div class="content">
+          <p class="title has-text-white">Check these out!</p>
+          <p class="subtitle has-text-white">Your top 10 recommended spots (click to visit!):</p>
+          <div class="content has-text-white" id="results">
+            <!-- Content -->
+
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+  <footer class="footer has-background-link mx-6 ml-6">
+    <div class="content has-text-centered">
+      <p>
+        <a href="./about.html" target="_blank">About Us</a>
+      </p>
+    </div>
+  </footer>
+  <!-- Javascript starts here -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+
+    document.getElementById("userInput").addEventListener('click', event => {
+      event.preventDefault();
+      var lon;
+      var lat;
+      var searchInput = document.getElementById('search').value;
+      console.log(searchInput)
+
+      axios.get(`https://api.opentripmap.com/0.1/en/places/geoname?name=${searchInput}&apikey=5ae2e3f221c38a28845f05b6242c78f95403bb14bb2af76c5b0bcf42`)
+        .then(res => {
+          console.log(res.data.country)
+          country = res.data.country;
+          lon = res.data.lon;
+          lat = res.data.lat;
+          console.log(lon, lat)
+
+          axios.get(`https://api.opentripmap.com/0.1/en/places/radius?radius=10000&lon=${lon}&lat=${lat}&rate=3&apikey=5ae2e3f221c38a28845f05b6242c78f95403bb14bb2af76c5b0bcf42`)
+            .then(res => {
+              var loc = res.data;
+              console.log(loc)
+              console.log(lon)
+              console.log(lat)
+
+              axios.get(`https://corona.lmao.ninja/v2/countries/${country}?yesterday&strict&query%20%60`)
+                .then(res => {
+                  var covid = res.data
+                  console.log(covid)
+
+                  document.getElementById('results').innerHTML = `
+                    <h3 class="has-text-white">
+                    <a style="text-decoration:none" href="https://www.google.com/search?q=${loc.features[0].properties.name}" target="_blank">${loc.features[0].properties.name}<br><br>                 
+                    <a style="text-decoration:none" href="https://www.google.com/search?q=${loc.features[5].properties.name}" target="_blank">${loc.features[5].properties.name} <br><br>
+                    <a style="text-decoration:none" href="https://www.google.com/search?q=${loc.features[10].properties.name}" target="_blank">${loc.features[10].properties.name} <br><br>
+                    <a style="text-decoration:none" href="https://www.google.com/search?q=${loc.features[15].properties.name}" target="_blank">${loc.features[15].properties.name} <br><br>
+                    <a style="text-decoration:none" href="https://www.google.com/search?q=${loc.features[20].properties.name}" target="_blank">${loc.features[20].properties.name} <br><br>
+                    <a style="text-decoration:none" href="https://www.google.com/search?q=${loc.features[25].properties.name}" target="_blank">${loc.features[25].properties.name} <br><br>
+                    <a style="text-decoration:none" href="https://www.google.com/search?q=${loc.features[30].properties.name}" target="_blank">${loc.features[30].properties.name} <br><br>
+                    <a style="text-decoration:none" href="https://www.google.com/search?q=${loc.features[35].properties.name}" target="_blank">${loc.features[35].properties.name} <br><br>
+                    <a style="text-decoration:none" href="https://www.google.com/search?q=${loc.features[40].properties.name}" target="_blank">${loc.features[40].properties.name} <br><br>
+                    <a style="text-decoration:none" href="https://www.google.com/search?q=${loc.features[45].properties.name}" target="_blank">${loc.features[45].properties.name} <br><br>
+                    </h3>
+                  `
+                  document.getElementById('covidResults').innerHTML = `
+                    <h1 class="has-text-white">${covid.country}</h1>
+                    <p><b>Active Cases</b> ${covid.active}
+                    <p><b>Today's Cases</b> ${covid.todayCases}
+                    <p><b>Today's Deaths</b> ${covid.todayDeaths}
+                  `
+                })
+                .catch(err => console.error(err))
+
+            })
+            .catch(err => console.error(err))
+
+        })
+        .catch(err => console.error(err))
+
+
+    })
+
+  </script>
+</body>
+
+</html>
