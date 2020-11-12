@@ -17,7 +17,7 @@ APIs Used:
     Unsplash - Gets an image related to the given input
     OpenWeatherMap - Gets weather data for the given input
 
-Challenges and Successes
+Challenges and Successes:
 
     Splitting up the work: Joseph & Celia on HTML/CSS and Kyle & Ronald on Javascript
     Learning the Bulma framework in a short period of time
