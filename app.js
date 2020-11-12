@@ -56,7 +56,7 @@ document.getElementById("userInput").addEventListener('click', event => {
 
                   document.getElementById('search').value = ''
 
-                  document.body.style.backgroundImage = `url('${image.results[1].urls.full}')`;
+                  document.body.style.backgroundImage = `url('${image.results[2].urls.full}')`;
                 })
 
                 function rateCovidSafety(rating) {
