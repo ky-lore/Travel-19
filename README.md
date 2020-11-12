@@ -1,2 +1,2 @@
 # Travel-19: Safer Travels During a Global Pandemic.
-A simple application to give you a snapshot of any given destination city. Get useful information such as number of active COVID-19 (coronavirus) cases in your destination country,recommendations on safety and protocol, crowdsourced & under-the-radar tourist locations, weather forecast for the immediate week, and a snapshot of your destination city.
+A simple application to give you a snapshot of any given destination city. Get useful information such as number of active COVID-19 (coronavirus) cases in your destination country, recommendations on safety and protocol, crowdsourced & under-the-radar tourist locations, weather forecast for the immediate week, and a snapshot of your destination city.

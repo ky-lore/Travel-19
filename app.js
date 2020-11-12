@@ -55,6 +55,8 @@ document.getElementById("userInput").addEventListener('click', event => {
                   document.getElementById('imageResult').append(imgElem)
 
                   document.getElementById('search').value = ''
+
+                  document.body.style.backgroundImage = `url('${image.results[0].urls.regular}')`;
                 })
 
                 function rateCovidSafety(rating) {
