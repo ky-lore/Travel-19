@@ -1,0 +1,22 @@
+<section class="section py-1">
+  <div class="container">
+    <div class="columns">
+      <div class="column">
+        <div class="notification">
+          <p><b>Tomorrow</b><br>
+            Weather: ${weather[4].weather[0].main}<br>
+            Temperature: ${Math.round(9 / 5 * (weather[4].main.temp - 273) + 32)}° F<br>
+            Wind: ${weather[4].wind.speed} mph
+        </div>
+      </div>
+      <div class="column">
+        <div class="notification">
+          <p><b>The next day</b><br>
+            Weather: ${weather[12].weather[0].main}<br>
+            Temperature: ${Math.round(9 / 5 * (weather[12].main.temp - 273) + 32)}° F<br>
+            Wind: ${weather[12].wind.speed} mph
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

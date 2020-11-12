@@ -55,15 +55,51 @@ document.getElementById("userInput").addEventListener('click', event => {
                   document.getElementById('imageResult').append(imgElem)
 
                   document.getElementById('search').value = ''
+
+                  document.body.style.backgroundImage = `url('${image.results[0].urls.regular}')`;
                 })
 
+                function rateCovidSafety(rating) {
+                  if (covid.activePerOneMillion <= 300) {
+                    rating = `There are currently ${Math.round(covid.activePerOneMillion)} active cases of COVID-19 per million. We think it is VERY safe to travel to this country, but beware travel-mandated quarantines upon arrival. Please be mindful of and observe proper COVID-related conduct, such as social distancing and mask usage.`
+                  } else if (covid.activePerOneMillion <= 1000) {
+                    rating = `There are currently ${Math.round(covid.activePerOneMillion)} active cases of COVID-19 per million. We think it is RELATIVELY safe to travel to this country, but be vigilant of high-risk activities. Please be mindful of and observe proper COVID-related conduct, such as social distancing and mask usage.`
+                  } else if (covid.activePerOneMillion <= 3000) {
+                    rating = `There are currently ${Math.round(covid.activePerOneMillion)} active cases of COVID-19 per million. We think it is SOMEWHAT safe to travel to this country, but be vigilant of high-risk activities. Please be mindful of and observe proper COVID-related conduct, such as social distancing and mask usage.`
+                  } else if (covid.activePerOneMillion <= 5000) {
+                    rating = `There are currently ${Math.round(covid.activePerOneMillion)} active cases of COVID-19 per million. We think it is RISKY to travel to this country. Avoid high-risk activities, such as public gatherings. Please be mindful of and observe proper COVID-related conduct, such as social distancing and mask usage.`
+                  } else if (covid.activePerOneMillion <= 15000) {
+                    rating = `There are currently ${Math.round(covid.activePerOneMillion)} active cases of COVID-19 per million. We think it is VERY risky to travel to this country. Avoid high-risk activities, such as public gatherings. Be extremely vigilant regarding COVID-related safety conduct, and wash hands as frequently as possible.`
+                  } else {
+                    rating = `There are currently ${Math.round(covid.activePerOneMillion)} active cases of COVID-19 per million. We think it is EXTREMELY RISKY to travel to this country. We do not recommend any form of non-essential travel to this country. If you currently reside, be extremely vigilant regarding COVID-related safety conduct.`
+                  }
+                  return rating;
+                }
+
               // Displays covid info from API into the covidResults div
-              document.getElementById('covidResults').innerHTML = `
-                    <h1 class="has-text-white">${covid.country}</h1>
-                    <p><b>Active Cases</b> ${covid.active}
-                    <p><b>Today's Cases</b> ${covid.todayCases}
-                    <p><b>Today's Deaths</b> ${covid.todayDeaths}
+                  document.getElementById('covidResults').innerHTML = `
+                  <section class="section py-1">
+                    <div class="container">
+                      <div class="columns">
+                        <div class="column">
+                          <div class="notification">
+                            <h1>${covid.country}</h1>
+                            <p id="blackText"><b>Active Cases</b> ${covid.active}
+                            <p id="blackText"><b>Today's Cases</b> ${covid.todayCases}
+                            <p id="blackText"><b>Today's Deaths</b> ${covid.todayDeaths}
+                          </div>
+                        </div>
+                        <div class="column">
+
+                            <p id="smallText">${rateCovidSafety()}
+
+                        </div>
+                      </div>
+                    </div>
+                  </section>
                   `
+
+              
             })
             .catch(err => console.error(err))
 

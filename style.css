@@ -13,3 +13,15 @@ a {
 #transparent {
   opacity: 0%;
 }
+
+#blackText {
+  color: black;
+}
+
+#smallText {
+  font-size: 14px;
+}
+
+#results {
+  text-align: center;
+}
