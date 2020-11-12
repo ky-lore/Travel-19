@@ -4,41 +4,32 @@ document.getElementById("userInput").addEventListener('click', event => {
   var lon;
   var lat;
   var searchInput = document.getElementById('search').value;
-  // console.log(searchInput)
 
   // API for retrieving geocode and country data for input
   axios.get(`https://api.opentripmap.com/0.1/en/places/geoname?name=${searchInput}&apikey=5ae2e3f221c38a28845f05b6242c78f95403bb14bb2af76c5b0bcf42`)
     .then(res => {
-      // console.log(res.data.country)
       country = res.data.country;
       lon = res.data.lon;
       lat = res.data.lat;
-      // console.log(lon, lat)
 
   // API that uses geocode to find tourist destinations nearby 
   axios.get(`https://api.opentripmap.com/0.1/en/places/radius?radius=10000&lon=${lon}&lat=${lat}&rate=3&apikey=5ae2e3f221c38a28845f05b6242c78f95403bb14bb2af76c5b0bcf42`)
     .then(res => {
       var loc = res.data;
-      // console.log(loc)
-      // console.log(lon)
-      // console.log(lat)
 
   // API for covid-19 info
   axios.get(`https://corona.lmao.ninja/v2/countries/${country}?yesterday&strict&query%20%60`)
     .then(res => {
       var covid = res.data;
-      // console.log(covid)
 
   // API for images
   axios.get(`https://api.unsplash.com/search/photos?page=1&query=${searchInput}&client_id=mMMsMJbMcVWyjFIi4RLnMYtZ0_PAQXqh-HODKnPCcxw`)
     .then(res => {
-      var image = res.data;
-      // console.log(image)              
+      var image = res.data;             
 
   // API for weather info
   axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${searchInput}&appid=b9a19d23d6cf2eb624e5529ab42acecb`)
   .then(res => {
-    // console.log(res.data.list)
     var weather = res.data.list;
 
     // Creates search links to 10 tourist destinations
