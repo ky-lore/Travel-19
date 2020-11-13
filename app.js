@@ -37,9 +37,9 @@ document.getElementById("userInput").addEventListener('click', event => {
 
   // API for weather info
   axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${searchInput}&appid=b9a19d23d6cf2eb624e5529ab42acecb`)
-  .then(res => {
-    // console.log(res.data.list)
-    var weather = res.data.list;
+    .then(res => {
+      // console.log(res.data.list)
+      var weather = res.data.list;
 
     // Creates search links to 10 tourist destinations
     document.getElementById('results').innerHTML = `
