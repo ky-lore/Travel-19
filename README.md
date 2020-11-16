@@ -26,14 +26,18 @@ Challenges and Successes:
 
 Contributors:
     
-    [Kyle Lorenzo](https://github.com/ky-lore)
-    [Ronald Esteban](https://github.com/ron-est)
-    [Joseph C Wong-Ludwiczak](https://github.com/Josclud)
-    [Celia Noriega](https://github.com/CeliaNoriega)
+ [Kyle Lorenzo](https://github.com/ky-lore)
+ [Ronald Esteban](https://github.com/ron-est)
+ [Joseph C Wong-Ludwiczak](https://github.com/Josclud)
+ [Celia Noriega](https://github.com/CeliaNoriega)
 
+Screenshots:
 
+ ![image](https://user-images.githubusercontent.com/71470687/99318339-5ed2ca00-281c-11eb-92cf-3f1368afbb29.png)
 
+ ![image](https://user-images.githubusercontent.com/71470687/99318365-6b572280-281c-11eb-9a46-1f07a8da4599.png)
 
+ ![image](https://user-images.githubusercontent.com/71470687/99318409-7ad66b80-281c-11eb-947c-d47dc71ce29c.png)
 
 
 MIT License
